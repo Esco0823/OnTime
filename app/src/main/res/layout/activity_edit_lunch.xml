@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/sHoursSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/hours"
+        android:prompt="@string/promptsh"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <Spinner
+        android:id="@+id/sMinutesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sHoursSpinner"
+        android:entries="@array/minutes"
+        android:prompt="@string/promptsm"/>
+
+    <Spinner
+        android:id="@+id/sAmpmSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sMinutesSpinner"
+        android:entries="@array/ampm"
+        android:prompt="@string/promptsampm"/>
+
+    <Button
+        android:id="@+id/addClassButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="AddFoodTime"
+        android:text="Add"
+        android:layout_below="@+id/textView"
+        android:layout_toRightOf="@+id/thCB"
+        android:layout_toEndOf="@+id/thCB"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
+
+    <CheckBox
+        android:id="@+id/mCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:text="M" />
+
+    <CheckBox
+        android:id="@+id/tCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_toEndOf="@+id/mCB"
+        android:layout_toRightOf="@+id/mCB"
+        android:text="T" />
+
+    <CheckBox
+        android:id="@+id/wCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_toEndOf="@+id/tCB"
+        android:layout_toRightOf="@+id/tCB"
+        android:text="W" />
+
+    <CheckBox
+        android:id="@+id/thCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TH"
+        android:layout_alignBaseline="@+id/wCB"
+        android:layout_alignBottom="@+id/wCB"
+        android:layout_toRightOf="@+id/wCB"
+        android:layout_toEndOf="@+id/wCB" />
+
+    <CheckBox
+        android:id="@+id/fCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_toRightOf="@+id/thCB"
+        android:layout_toEndOf="@+id/thCB" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mCB" />
+
+    <Spinner
+        android:id="@+id/eHoursSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/hours"
+        android:prompt="@string/prompteh"
+        android:layout_alignBaseline="@+id/sHoursSpinner"
+        android:layout_alignBottom="@+id/sHoursSpinner"
+        android:layout_toRightOf="@+id/sHoursSpinner"
+        android:layout_toEndOf="@+id/sHoursSpinner" />
+
+    <Spinner
+        android:id="@+id/eMinutesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eHoursSpinner"
+        android:layout_toEndOf="@+id/sMinutesSpinner"
+        android:layout_toRightOf="@+id/sMinutesSpinner"
+        android:entries="@array/minutes"
+        android:prompt="@string/promptem"/>
+
+    <Spinner
+        android:id="@+id/eAMPMSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eMinutesSpinner"
+        android:layout_toEndOf="@+id/sAmpmSpinner"
+        android:layout_toRightOf="@+id/sAmpmSpinner"
+        android:entries="@array/ampm"
+        android:prompt="@string/prompteampm"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:text="Start" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/eHoursSpinner"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/sHoursSpinner"
+        android:layout_toRightOf="@+id/sHoursSpinner"
+        android:text="End" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/eHoursSpinner"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/addClassButton"
+        android:layout_toRightOf="@+id/addClassButton"
+        android:text="Skip"
+        android:onClick="SkipFoodTime"/>
+</RelativeLayout>

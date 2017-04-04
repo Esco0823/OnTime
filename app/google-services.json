@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "669878966704",
+    "firebase_url": "https://ontime-cb462.firebaseio.com",
+    "project_id": "ontime-cb462",
+    "storage_bucket": "ontime-cb462.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669878966704:android:f9a39c0ce504c70d",
+        "android_client_info": {
+          "package_name": "edu.fsu.cs.mobile.ontime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669878966704-tms86loikrvpp73hhc6mqpdso17o3la4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fsu.cs.mobile.ontime",
+            "certificate_hash": "6445b59661fe3af04888892352d152cf914585ec"
+          }
+        },
+        {
+          "client_id": "669878966704-g1jg9h3qdoema57upskagdv2n7sj0ui7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fsu.cs.mobile.ontime",
+            "certificate_hash": "a0be978cf5a5cdd48a320d0a84cd69057f4b03e0"
+          }
+        },
+        {
+          "client_id": "669878966704-m34nru3nl98en672raunih60qpao62iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuMNKvyUkuK7Suw9oOy992R-ztC22L_9Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669878966704-m34nru3nl98en672raunih60qpao62iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.fsu.cs.mobile.ontime.SignInActivity">
+
+    <RelativeLayout
+        android:layout_width="368dp"
+        android:layout_height="503dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <EditText
+            android:id="@+id/signInUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="83dp"
+            tools:layout_editor_absoluteY="155dp"
+            android:layout_above="@+id/signInPassword"
+            android:layout_alignLeft="@+id/signInPassword"
+            android:layout_alignStart="@+id/signInPassword"
+            android:layout_marginBottom="63dp" />
+
+        <EditText
+            android:id="@+id/signInPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="277dp"
+            android:layout_above="@+id/signInLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="55dp" />
+
+        <Button
+            android:id="@+id/signInLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="LoginClicked"
+            android:text="Login"
+            tools:layout_editor_absoluteX="230dp"
+            tools:layout_editor_absoluteY="372dp"
+            android:layout_marginBottom="103dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/signInPassword"
+            android:layout_alignEnd="@+id/signInPassword" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

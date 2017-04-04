@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/profileOption"
+        android:title="Profile"/>
+    <item android:id="@+id/editScheduleOption"
+        android:title="Edit Schedule"/>
+    <item android:id="@+id/editFriendsOption"
+        android:title="Edit Friends"/>
+    <item android:id="@+id/signOutOption"
+        android:title="Sign Out"/>
+</menu>

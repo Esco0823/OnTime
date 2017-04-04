@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.fsu.cs.mobile.ontime.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="368dp"
+        android:layout_height="503dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+        <EditText
+            android:id="@+id/registerUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="148dp"
+            android:layout_above="@+id/registerPassword"
+            android:layout_alignLeft="@+id/registerPassword"
+            android:layout_alignStart="@+id/registerPassword"
+            android:layout_marginBottom="51dp" />
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="83dp"
+            tools:layout_editor_absoluteY="239dp"
+            android:layout_above="@+id/registerConfirmPassword"
+            android:layout_alignLeft="@+id/registerConfirmPassword"
+            android:layout_alignStart="@+id/registerConfirmPassword"
+            android:layout_marginBottom="48dp" />
+
+        <EditText
+            android:id="@+id/registerConfirmPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="confirm password"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="83dp"
+            tools:layout_editor_absoluteY="317dp"
+            android:layout_above="@+id/registerSubmit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="57dp" />
+
+        <Button
+            android:id="@+id/registerSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            tools:layout_editor_absoluteX="217dp"
+            tools:layout_editor_absoluteY="401dp"
+            android:onClick="SignUpClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/registerConfirmPassword"
+            android:layout_alignEnd="@+id/registerConfirmPassword"
+            android:layout_marginBottom="62dp" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

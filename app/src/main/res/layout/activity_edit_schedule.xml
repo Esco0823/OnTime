@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/courseET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="Course Code"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/courseIdET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/courseET"
+        android:ems="10"
+        android:hint="Course ID"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/buildingET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/courseIdET"
+        android:ems="10"
+        android:hint="Building"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/roomNumET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buildingET"
+        android:ems="10"
+        android:hint="Room Number"
+        android:inputType="textPersonName" />
+
+    <TextView android:id="@+id/startTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/roomNumET"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End"
+        android:layout_alignLeft="@+id/startTV"
+        android:layout_below="@+id/roomNumET"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        />
+
+    <Spinner
+        android:id="@+id/sHoursSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/hours"
+        android:prompt="@string/promptsh"
+        android:layout_below="@+id/roomNumET"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp" />
+
+    <Spinner
+        android:id="@+id/sMinutesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sHoursSpinner"
+        android:entries="@array/minutes"
+        android:prompt="@string/promptsm"/>
+
+    <Spinner
+        android:id="@+id/sAmpmSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/ampm"
+        android:prompt="@string/promptsampm"
+        android:layout_below="@+id/sMinutesSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/addClassButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="AddClass"
+        android:text="Add"
+        android:layout_below="@+id/courseET"
+        android:layout_toRightOf="@+id/fCB"
+        android:layout_toEndOf="@+id/fCB" />
+
+    <CheckBox
+        android:id="@+id/mCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="M"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/tCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="T"
+        android:layout_alignBaseline="@+id/mCB"
+        android:layout_alignBottom="@+id/mCB"
+        android:layout_toRightOf="@+id/mCB"
+        android:layout_toEndOf="@+id/mCB" />
+
+    <CheckBox
+        android:id="@+id/wCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="W"
+        android:layout_alignBaseline="@+id/tCB"
+        android:layout_alignBottom="@+id/tCB"
+        android:layout_toRightOf="@+id/tCB"
+        android:layout_toEndOf="@+id/tCB" />
+
+    <CheckBox
+        android:id="@+id/thCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TH"
+        android:layout_alignBaseline="@+id/wCB"
+        android:layout_alignBottom="@+id/wCB"
+        android:layout_toRightOf="@+id/wCB"
+        android:layout_toEndOf="@+id/wCB" />
+
+    <CheckBox
+        android:id="@+id/fCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:layout_alignBaseline="@+id/thCB"
+        android:layout_alignBottom="@+id/thCB"
+        android:layout_toRightOf="@+id/thCB"
+        android:layout_toEndOf="@+id/thCB" />
+
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mCB" />
+
+    <Spinner
+        android:id="@+id/eHoursSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/hours"
+        android:prompt="@string/prompteh"
+        android:layout_alignBaseline="@+id/sHoursSpinner"
+        android:layout_alignBottom="@+id/sHoursSpinner"
+        android:layout_toRightOf="@+id/sHoursSpinner"
+        android:layout_toEndOf="@+id/sHoursSpinner" />
+
+    <Spinner
+        android:id="@+id/eMinutesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eHoursSpinner"
+        android:layout_toEndOf="@+id/sMinutesSpinner"
+        android:layout_toRightOf="@+id/sMinutesSpinner"
+        android:entries="@array/minutes"
+        android:prompt="@string/promptem"/>
+
+    <Spinner
+        android:id="@+id/eAMPMSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eMinutesSpinner"
+        android:layout_toEndOf="@+id/sAmpmSpinner"
+        android:layout_toRightOf="@+id/sAmpmSpinner"
+        android:entries="@array/ampm"
+        android:prompt="@string/prompteampm"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:layout_alignBaseline="@+id/addClassButton"
+        android:layout_alignBottom="@+id/addClassButton"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="SkipClass"/>
+</RelativeLayout>
