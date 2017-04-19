@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <Spinner
         android:id="@+id/sHoursSpinner"
@@ -12,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp" />
+        android:layout_marginTop="33dp"/>
 
     <Spinner
         android:id="@+id/sMinutesSpinner"
@@ -44,7 +45,9 @@
         android:layout_toRightOf="@+id/thCB"
         android:layout_toEndOf="@+id/thCB"
         android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp" />
+        android:layout_marginStart="13dp"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorGold"/>
 
     <CheckBox
         android:id="@+id/mCB"
@@ -53,7 +56,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/sAmpmSpinner"
-        android:text="M" />
+        android:text="M"
+        android:textColor="@color/colorGarnet"/>
 
     <CheckBox
         android:id="@+id/tCB"
@@ -62,7 +66,8 @@
         android:layout_below="@+id/sAmpmSpinner"
         android:layout_toEndOf="@+id/mCB"
         android:layout_toRightOf="@+id/mCB"
-        android:text="T" />
+        android:text="T"
+        android:textColor="@color/colorGarnet"/>
 
     <CheckBox
         android:id="@+id/wCB"
@@ -71,17 +76,19 @@
         android:layout_below="@+id/sAmpmSpinner"
         android:layout_toEndOf="@+id/tCB"
         android:layout_toRightOf="@+id/tCB"
-        android:text="W" />
+        android:text="W"
+        android:textColor="@color/colorGarnet"/>
 
     <CheckBox
         android:id="@+id/thCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TH"
+        android:text="TR"
         android:layout_alignBaseline="@+id/wCB"
         android:layout_alignBottom="@+id/wCB"
         android:layout_toRightOf="@+id/wCB"
-        android:layout_toEndOf="@+id/wCB" />
+        android:layout_toEndOf="@+id/wCB"
+        android:textColor="@color/colorGarnet"/>
 
     <CheckBox
         android:id="@+id/fCB"
@@ -90,10 +97,31 @@
         android:text="F"
         android:layout_below="@+id/sAmpmSpinner"
         android:layout_toRightOf="@+id/thCB"
-        android:layout_toEndOf="@+id/thCB" />
+        android:layout_toEndOf="@+id/thCB"
+        android:textColor="@color/colorGarnet"/>
+
+    <CheckBox
+        android:id="@+id/saCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAT"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_toRightOf="@+id/fCB"
+        android:layout_toEndOf="@+id/fCB"
+        android:textColor="@color/colorGarnet"/>
+
+    <CheckBox
+        android:id="@+id/suCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SUN"
+        android:layout_below="@+id/sAmpmSpinner"
+        android:layout_toRightOf="@+id/saCB"
+        android:layout_toEndOf="@+id/saCB"
+        android:textColor="@color/colorGarnet"/>
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -140,7 +168,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
-        android:text="Start" />
+        android:text="Start"
+        android:textColor="@color/colorGarnet"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -151,7 +180,8 @@
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/sHoursSpinner"
         android:layout_toRightOf="@+id/sHoursSpinner"
-        android:text="End" />
+        android:text="End"
+        android:textColor="@color/colorGarnet"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -162,5 +192,7 @@
         android:layout_toEndOf="@+id/addClassButton"
         android:layout_toRightOf="@+id/addClassButton"
         android:text="Skip"
-        android:onClick="SkipFoodTime"/>
+        android:onClick="SkipFoodTime"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorGold"/>
 </RelativeLayout>

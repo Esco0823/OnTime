@@ -1,9 +1,5 @@
 package edu.fsu.cs.mobile.ontime;
 
-/**
- * Created by Dante on 3/31/2017.
- */
-
 public class Classes {
     private String building;
     private String course;

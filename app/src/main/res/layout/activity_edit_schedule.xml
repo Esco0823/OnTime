@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
 
     <EditText
@@ -13,7 +14,10 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="Course Code"
-        android:inputType="textPersonName" />
+        android:inputType="textCapCharacters"
+        android:textColorHint="@color/colorGarnet"
+        android:textColor="@color/colorGarnet"
+        android:backgroundTint="@color/colorGarnet"/>
 
     <EditText
         android:id="@+id/courseIdET"
@@ -24,7 +28,10 @@
         android:layout_below="@+id/courseET"
         android:ems="10"
         android:hint="Course ID"
-        android:inputType="textPersonName" />
+        android:inputType="numberDecimal"
+        android:textColorHint="@color/colorGarnet"
+        android:textColor="@color/colorGarnet"
+        android:backgroundTint="@color/colorGarnet"/>
 
     <EditText
         android:id="@+id/buildingET"
@@ -35,7 +42,10 @@
         android:layout_below="@+id/courseIdET"
         android:ems="10"
         android:hint="Building"
-        android:inputType="textPersonName" />
+        android:inputType="textCapCharacters"
+        android:textColorHint="@color/colorGarnet"
+        android:textColor="@color/colorGarnet"
+        android:backgroundTint="@color/colorGarnet"/>
 
     <EditText
         android:id="@+id/roomNumET"
@@ -46,7 +56,10 @@
         android:layout_below="@+id/buildingET"
         android:ems="10"
         android:hint="Room Number"
-        android:inputType="textPersonName" />
+        android:inputType="numberDecimal"
+        android:textColorHint="@color/colorGarnet"
+        android:textColor="@color/colorGarnet"
+        android:backgroundTint="@color/colorGarnet"/>
 
     <TextView android:id="@+id/startTV"
         android:layout_width="wrap_content"
@@ -56,6 +69,7 @@
         android:layout_below="@+id/roomNumET"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:textColor="@color/colorGarnet"
         />
 
     <TextView
@@ -66,6 +80,7 @@
         android:layout_below="@+id/roomNumET"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="100dp"
+        android:textColor="@color/colorGarnet"
         />
 
     <Spinner
@@ -77,7 +92,9 @@
         android:layout_below="@+id/roomNumET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="35dp"
+        android:theme="@style/garnetAndGoldSpinner"
+        />
 
     <Spinner
         android:id="@+id/sMinutesSpinner"
@@ -87,7 +104,9 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/sHoursSpinner"
         android:entries="@array/minutes"
-        android:prompt="@string/promptsm"/>
+        android:prompt="@string/promptsm"
+        android:theme="@style/garnetAndGoldSpinner"
+        />
 
     <Spinner
         android:id="@+id/sAmpmSpinner"
@@ -97,7 +116,9 @@
         android:prompt="@string/promptsampm"
         android:layout_below="@+id/sMinutesSpinner"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:theme="@style/garnetAndGoldSpinner"
+        />
 
     <Button
         android:id="@+id/addClassButton"
@@ -107,7 +128,9 @@
         android:text="Add"
         android:layout_below="@+id/courseET"
         android:layout_toRightOf="@+id/fCB"
-        android:layout_toEndOf="@+id/fCB" />
+        android:layout_toEndOf="@+id/fCB"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorGold"/>
 
     <CheckBox
         android:id="@+id/mCB"
@@ -116,7 +139,9 @@
         android:text="M"
         android:layout_below="@+id/sAmpmSpinner"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorGarnet"
+        />
 
     <CheckBox
         android:id="@+id/tCB"
@@ -126,7 +151,9 @@
         android:layout_alignBaseline="@+id/mCB"
         android:layout_alignBottom="@+id/mCB"
         android:layout_toRightOf="@+id/mCB"
-        android:layout_toEndOf="@+id/mCB" />
+        android:layout_toEndOf="@+id/mCB"
+        android:textColor="@color/colorGarnet"
+        />
 
     <CheckBox
         android:id="@+id/wCB"
@@ -136,7 +163,9 @@
         android:layout_alignBaseline="@+id/tCB"
         android:layout_alignBottom="@+id/tCB"
         android:layout_toRightOf="@+id/tCB"
-        android:layout_toEndOf="@+id/tCB" />
+        android:layout_toEndOf="@+id/tCB"
+        android:textColor="@color/colorGarnet"
+        />
 
     <CheckBox
         android:id="@+id/thCB"
@@ -146,7 +175,9 @@
         android:layout_alignBaseline="@+id/wCB"
         android:layout_alignBottom="@+id/wCB"
         android:layout_toRightOf="@+id/wCB"
-        android:layout_toEndOf="@+id/wCB" />
+        android:layout_toEndOf="@+id/wCB"
+        android:textColor="@color/colorGarnet"
+        />
 
     <CheckBox
         android:id="@+id/fCB"
@@ -156,10 +187,12 @@
         android:layout_alignBaseline="@+id/thCB"
         android:layout_alignBottom="@+id/thCB"
         android:layout_toRightOf="@+id/thCB"
-        android:layout_toEndOf="@+id/thCB" />
+        android:layout_toEndOf="@+id/thCB"
+        android:textColor="@color/colorGarnet"
+        />
 
     <ListView
-        android:id="@+id/listView2"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -207,5 +240,7 @@
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="SkipClass"/>
+        android:onClick="SkipClass"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorGold"/>
 </RelativeLayout>

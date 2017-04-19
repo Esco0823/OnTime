@@ -1,6 +1,8 @@
 package edu.fsu.cs.mobile.ontime;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,22 +34,14 @@ public class ProfileActivity extends Activity {
     private ArrayList<String> friendList = new ArrayList<String>();
 
     @Override
-    public void onBackPressed()
-    {
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         setTitle("Profile");
 
-        //CHANGE THIS LINE AFTER IMPLEMENTING SHARED PREFERENCES!!!!!!
         ((TextView) findViewById(R.id.profileName)).setText(getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
-        //CHANGE THIS LINE AFTER IMPLEMENTING SHARED PREFERENCES!!!!!!
         mDatabase1 = FirebaseDatabase.getInstance().getReference("food/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
         mDatabase1.addValueEventListener(new ValueEventListener() {
@@ -58,7 +52,7 @@ public class ProfileActivity extends Activity {
                 {
                     StartEnd myStartEnd =  next2.getValue(StartEnd.class);
                     foodSchedule.add(myStartEnd);
-                    listOfFoodBreaks = listOfFoodBreaks + myStartEnd.getDays() + " " + myStartEnd.getStart() + " " + myStartEnd.getEnd() + "\n";
+                    listOfFoodBreaks = listOfFoodBreaks + intToDay(myStartEnd.getDays()) + " " + militaryToNormal(myStartEnd.getStart()) + " - " + militaryToNormal(myStartEnd.getEnd()) + "\n";
                 }
 
                 ((TextView) findViewById(R.id.eatingTimeListing)).setText(listOfFoodBreaks);
@@ -71,7 +65,6 @@ public class ProfileActivity extends Activity {
             }
         });
 
-        //CHANGE THIS LINE AFTER IMPLEMENTING SHARED PREFERENCES!!!!!!
         mDatabase2 = FirebaseDatabase.getInstance().getReference("schedule/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
         mDatabase2.addValueEventListener(new ValueEventListener() {
@@ -82,7 +75,7 @@ public class ProfileActivity extends Activity {
                 {
                     Classes myClasses =  next.getValue(Classes.class);
                     classSchedule.add(myClasses);
-                    listOfClasses = listOfClasses + myClasses.getCourse() + " " + myClasses.getDays() + " " + myClasses.getStartTime() + " " + myClasses.getEndTime() + " " + myClasses.getBuilding() + " " + myClasses.getRoom() + "\n";
+                    listOfClasses = listOfClasses + myClasses.getCourse() + " " + intToDay(myClasses.getDays()) + " " + militaryToNormal(myClasses.getStartTime()) + " - " + militaryToNormal(myClasses.getEndTime()) + " " + myClasses.getBuilding() + "" + myClasses.getRoom() + "\n";
                 }
 
                 ((TextView) findViewById(R.id.scheduleListing)).setText(listOfClasses);
@@ -95,7 +88,6 @@ public class ProfileActivity extends Activity {
             }
         });
 
-        //CHANGE THIS LINE AFTER IMPLEMENTING SHARED PREFERENCES!!!!!!
         mDatabase3 = FirebaseDatabase.getInstance().getReference("study/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
         mDatabase3.addValueEventListener(new ValueEventListener() {
@@ -106,10 +98,10 @@ public class ProfileActivity extends Activity {
                 {
                     Study myStudySessions =  next.getValue(Study.class);
                     studySessionSchedule.add(myStudySessions);
-                    listOfStudySessions = listOfStudySessions + myStudySessions.getCourse() + " " + myStudySessions.getDate() + " " + myStudySessions.getStart() + " " + myStudySessions.getEnd() + "\n";
+                    listOfStudySessions = listOfStudySessions + myStudySessions.getCourse() + " " + myStudySessions.getDate() + " " + militaryToNormal(myStudySessions.getStart()) + " - " + militaryToNormal(myStudySessions.getEnd()) + "\n";
                 }
 
-//                ((TextView) findViewById(R.id.studyTimeListing)).setText(listOfStudySessions);
+                ((TextView) findViewById(R.id.studyListing)).setText(listOfStudySessions);
             }
 
 
@@ -119,8 +111,6 @@ public class ProfileActivity extends Activity {
             }
         });
 
-
-        //CHANGE THIS LINE AFTER IMPLEMENTING SHARED PREFERENCES!!!!!!
         mDatabase4 = FirebaseDatabase.getInstance().getReference("friends/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
         mDatabase4.addValueEventListener(new ValueEventListener() {
@@ -146,6 +136,81 @@ public class ProfileActivity extends Activity {
 
     }
 
+    public String militaryToNormal(String military)
+    {
+        String normal = "";
+        String ammpm = "";
+        int colonLocation = military.indexOf(":");
+        int hour = Integer.parseInt(military.substring(0, colonLocation));
+        int minutes = Integer.parseInt(military.substring(colonLocation + 1, military.length()));
+
+        if(hour < 12)
+        {
+            if(hour == 0)
+            {
+                hour = 12;
+            }
+            ammpm = "AM";
+        }
+        else
+        {
+            if(hour > 12)
+            {
+                hour = hour - 12;
+            }
+            ammpm = "PM";
+        }
+
+
+        normal = hour + ":";
+
+        if(minutes < 10)
+        {
+            normal = normal + "0";
+        }
+
+        normal = normal + minutes + " " + ammpm;
+
+        return normal;
+    }
+
+
+    public String intToDay(String daysString)
+    {
+        String solution = "";
+
+        if(daysString.contains("0"))
+        {
+            solution = solution + "SU";
+        }
+        if(daysString.contains("1"))
+        {
+            solution = solution + "M";
+        }
+        if(daysString.contains("2"))
+        {
+            solution = solution + "T";
+        }
+        if(daysString.contains("3"))
+        {
+            solution = solution + "W";
+        }
+        if(daysString.contains("4"))
+        {
+            solution = solution + "TR";
+        }
+        if(daysString.contains("5"))
+        {
+            solution = solution + "F";
+        }
+        if(daysString.contains("6"))
+        {
+            solution = solution + "SA";
+        }
+
+        return solution;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -157,8 +222,12 @@ public class ProfileActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item){
         Intent intent;
         switch(item.getItemId()) {
-            case R.id.mainActivityOption:
+            case R.id.mainActivityOption2:
                 intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.FriendRequests2:
+                intent = new Intent(this, FriendInvites.class);
                 startActivity(intent);
                 break;
             case R.id.editScheduleOption2:
@@ -169,6 +238,10 @@ public class ProfileActivity extends Activity {
                 intent = new Intent(this, EditFriendsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.settingsOption2:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.signOutOption2:
                 intent = new Intent(this, LoginActivity.class);
 
@@ -176,7 +249,13 @@ public class ProfileActivity extends Activity {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString("username", "");
                 editor.putString("password", "");
-                editor.commit();
+
+                ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+                editor.putInt("notificationNumber", 0);
+                editor.apply();
+
+                stopService(new Intent(this, NotificationService.class));
+                stopService(new Intent(this, NotificationReceivedService.class));
 
                 startActivity(intent);
                 break;

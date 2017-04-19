@@ -7,6 +7,10 @@
         android:title="Edit Schedule"/>
     <item android:id="@+id/editFriendsOption"
         android:title="Edit Friends"/>
+    <item android:id="@+id/FriendRequests"
+        android:title="Accept Friends"/>
+    <item android:id="@+id/settingsOption"
+        android:title="Settings"/>
     <item android:id="@+id/signOutOption"
         android:title="Sign Out"/>
 </menu>

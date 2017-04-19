@@ -1,9 +1,5 @@
 package edu.fsu.cs.mobile.ontime;
 
-/**
- * Created by Dante on 3/30/2017.
- */
-
 public class StartEnd
 {
     private String days;

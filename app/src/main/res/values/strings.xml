@@ -91,4 +91,13 @@
         <item>AM</item>
         <item>PM</item>
     </string-array>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+
 </resources>

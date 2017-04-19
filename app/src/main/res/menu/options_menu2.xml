@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/mainActivityOption"
+    <item android:id="@+id/mainActivityOption2"
         android:title="Home"/>
     <item android:id="@+id/editScheduleOption2"
         android:title="Edit Schedule"/>
     <item android:id="@+id/editFriendsOption2"
         android:title="Edit Friends"/>
+    <item android:id="@+id/FriendRequests2"
+        android:title="Accept Friends"/>
+    <item android:id="@+id/settingsOption2"
+        android:title="Settings"/>
     <item android:id="@+id/signOutOption2"
         android:title="Sign Out"/>
 </menu>

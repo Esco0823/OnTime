@@ -1,21 +1,16 @@
 package edu.fsu.cs.mobile.ontime;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,21 +24,23 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static edu.fsu.cs.mobile.ontime.LoginActivity.PREFS_NAME;
+import static edu.fsu.cs.mobile.ontime.UserNotification.CLASS;
+import static edu.fsu.cs.mobile.ontime.UserNotification.FOOD;
+import static edu.fsu.cs.mobile.ontime.UserNotification.STUDY;
 
 
-public class MainActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
+public class MainActivity extends Activity
+{
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase0;
     private DatabaseReference mDatabase1;
     private DatabaseReference mDatabase2;
     private DatabaseReference mDatabase3;
     private ArrayList<StartEnd> foodSchedule = new ArrayList<StartEnd>();
     private ArrayList<Classes> classSchedule = new ArrayList<Classes>();
     private ArrayList<Study> studySessionSchedule = new ArrayList<Study>();
-    private GoogleApiClient googleApiClient;
-    private Location Lastlocation;
-
-    Users newUser;
+    private ArrayList<UserNotification> putBack1 = new ArrayList<UserNotification>();
+    private ArrayList<UserNotification> putBack2 = new ArrayList<UserNotification>();
 
 
     @Override
@@ -59,70 +56,50 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
         setTitle("Home");
 
-        if(googleApiClient == null){
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-        googleApiClient.connect();
+        Intent myIntent = new Intent(this, NotificationReceivedService.class);
+        startService(myIntent);
+
 
         mDatabase1 = FirebaseDatabase.getInstance().getReference("food/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
 
         mDatabase1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                        for(DataSnapshot next : snapshot.getChildren())
-                        {
-                            StartEnd myStartEnd =  next.getValue(StartEnd.class);
-                            foodSchedule.add(myStartEnd);
-                        }
+                for (DataSnapshot next : snapshot.getChildren()) {
+                    StartEnd myStartEnd = next.getValue(StartEnd.class);
+                    foodSchedule.add(myStartEnd);
+                }
 
-                        //THE MINIMUM STUFF IS BROKEN!!!!!!!!!!
-                        Calendar calendar = Calendar.getInstance();
+                Calendar calendar = Calendar.getInstance();
 
-                        //SimpleDateFormat dateSetup = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-                        //String date = dateSetup.format(calendar.getTime());
+                double time = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 100.0);
 
-                        double time = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE)/100.0);
-
-                        double min = 2000;
-                        String minString = "";
-                        for(int i = 0; i < foodSchedule.size(); i++)
-                        {
-                            double current = timeToDouble(foodSchedule.get(i).getStart());
-                            if((current - time) < min && (current - time) >= 0 && foodSchedule.get(i).getDays().contains(String.valueOf(dayToInt(calendar.get(Calendar.DAY_OF_WEEK)))))
-                            {
-                                min = current - time;
-                                minString = foodSchedule.get(i).getStart() + "-" + foodSchedule.get(i).getEnd();
-
-                                int t = ToCalendar(foodSchedule.get(i).getStart());
-                                t = Minus5mins(t);
-
-                                //NOTIFICATION STUFF FOR LUNCH TIME
-                                Calendar cal = Calendar.getInstance();
-                                Intent activate = new Intent(getApplicationContext(), TimeReceiver.class);
-                                AlarmManager alarms;
-                                PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, activate, 0);
-                                alarms = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-                                cal.set(Calendar.HOUR_OF_DAY, (t/100));
-                                cal.set(Calendar.MINUTE, (t%100));
-                                cal.set(Calendar.SECOND, 00);
-
-                                String s = "" + t;
-
-                                if(cal.getTimeInMillis() == System.currentTimeMillis()){
-                                    startService(activate);
-                                }
-                                ////////////////////////////////////////
-                                alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
-                                ((TextView) findViewById(R.id.upcomingFoodBreak)).setText(minString);
-                            }
-                        }
+                double min = 2000;
+                String minString = "";
+                int minIndex = -1;
+                for (int i = 0; i < foodSchedule.size(); i++) {
+                    double current = timeToDouble(foodSchedule.get(i).getStart());
+                    if ((current - time) < min && (current - time) >= 0 && foodSchedule.get(i).getDays().contains(String.valueOf(dayToInt(calendar.get(Calendar.DAY_OF_WEEK))))) {
+                        min = current - time;
+                        minString = militaryToNormal(foodSchedule.get(i).getStart()) + " - " + militaryToNormal(foodSchedule.get(i).getEnd());
+                        minIndex = i;
 
 
                     }
+                }
+
+                if(minIndex >= 0) {
+                    int t = ToCalendar(foodSchedule.get(minIndex).getStart());
+                    t = MinusXMinutes(t, getSharedPreferences(PREFS_NAME, 0).getString("alertDistance", ""));
+
+                    Intent activate = new Intent(getApplicationContext(), TimeReceiver.class);
+                    activate.putExtra("notificationType1", FOOD);
+                    activate.putExtra("minFoodTime", t);
+                    sendBroadcast(activate);
+
+                    ((TextView) findViewById(R.id.upcomingFoodBreak)).setText(minString);
+                }
+            }
 
 
             @Override
@@ -144,24 +121,37 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
                 Calendar calendar = Calendar.getInstance();
 
-                //SimpleDateFormat dateSetup = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-                //String date = dateSetup.format(calendar.getTime());
-
                 double time = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE)/100.0);
 
                 double min = 2000;
                 String minString = "";
+                int minIndex = -1;
                 for(int i = 0; i < classSchedule.size(); i++)
                 {
                     double current = timeToDouble(classSchedule.get(i).getStartTime());
                     if((current - time) < min && (current - time) >= 0 && classSchedule.get(i).getDays().contains(String.valueOf(dayToInt(calendar.get(Calendar.DAY_OF_WEEK)))))
                     {
                         min = current - time;
-                        minString = classSchedule.get(i).getCourse() + " " + classSchedule.get(i).getStartTime() + "-" + classSchedule.get(i).getEndTime() + " " + classSchedule.get(i).getBuilding() + " " + classSchedule.get(i).getRoom();
+                        minString = classSchedule.get(i).getCourse() + " " + militaryToNormal(classSchedule.get(i).getStartTime()) + " - " + militaryToNormal(classSchedule.get(i).getEndTime()) + " " + classSchedule.get(i).getBuilding() + " " + classSchedule.get(i).getRoom();
+                        minIndex = i;
                     }
                 }
+                if(minIndex >= 0)
+                {
+                    int t = ToCalendar(classSchedule.get(minIndex).getStartTime());
+                    t = MinusXMinutes(t, getSharedPreferences(PREFS_NAME, 0).getString("alertDistance", ""));
 
-                ((TextView) findViewById(R.id.upcomingClass)).setText(minString);
+                    Intent activate = new Intent(getApplicationContext(), TimeReceiver.class);
+                    activate.putExtra("notificationType2", CLASS);
+                    activate.putExtra("minClassTime", t);
+                    activate.putExtra("building", classSchedule.get(minIndex).getBuilding());
+                    sendBroadcast(activate);
+
+
+                    ((TextView) findViewById(R.id.upcomingClass)).setText(minString);
+
+                }
+
             }
 
 
@@ -184,9 +174,6 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
                 Calendar calendar = Calendar.getInstance();
 
-                //SimpleDateFormat dateSetup = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-                //String date = dateSetup.format(calendar.getTime());
-
                 double time = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE)/100.0);
 
                 Date date = new Date();
@@ -196,6 +183,7 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
                 double min = 2000;
                 String minString = "";
+                int minIndex = -1;
                 for(int i = 0; i < studySessionSchedule.size(); i++)
                 {
                     try
@@ -214,11 +202,25 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
                     if((current - time) < min && (current - time) >= 0 && matchingDay)
                     {
                         min = current - time;
-                        minString = studySessionSchedule.get(i).getStart() + "-" + studySessionSchedule.get(i).getEnd() + " " + studySessionSchedule.get(i).getCourse();
+                        minString = militaryToNormal(studySessionSchedule.get(i).getStart()) + " - " + militaryToNormal(studySessionSchedule.get(i).getEnd()) + " " + studySessionSchedule.get(i).getCourse();
+                        minIndex = i;
                     }
                 }
+                if(minIndex >= 0)
+                {
+                    int t = ToCalendar(studySessionSchedule.get(minIndex).getStart());
+                    t = MinusXMinutes(t, getSharedPreferences(PREFS_NAME, 0).getString("alertDistance", ""));
 
-      //          ((TextView) findViewById(R.id.upcomingStudySession)).setText(minString);
+                    Intent activate = new Intent(getApplicationContext(), TimeReceiver.class);
+                    activate.putExtra("notificationType3", STUDY);
+                    activate.putExtra("minStudyTime", t);
+                    activate.putExtra("course", studySessionSchedule.get(minIndex).getCourse());
+                    sendBroadcast(activate);
+
+                    ((TextView) findViewById(R.id.upcomingStudySession)).setText(minString);
+
+                }
+
             }
 
 
@@ -227,7 +229,44 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
+    }
 
+    public String militaryToNormal(String military)
+    {
+        String normal = "";
+        String ammpm = "";
+        int colonLocation = military.indexOf(":");
+        int hour = Integer.parseInt(military.substring(0, colonLocation));
+        int minutes = Integer.parseInt(military.substring(colonLocation + 1, military.length()));
+
+        if(hour < 12)
+        {
+            if(hour == 0)
+            {
+                hour = 12;
+            }
+            ammpm = "AM";
+        }
+        else
+        {
+            if(hour > 12)
+            {
+                hour = hour - 12;
+            }
+            ammpm = "PM";
+        }
+
+
+        normal = hour + ":";
+
+        if(minutes < 10)
+        {
+            normal = normal + "0";
+        }
+
+        normal = normal + minutes + " " + ammpm;
+
+        return normal;
     }
 
     public double timeToDouble(String time)
@@ -277,12 +316,20 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
                 intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.FriendRequests:
+                intent = new Intent(this, FriendInvites.class);
+                startActivity(intent);
+                break;
             case R.id.editScheduleOption:
                 intent = new Intent(this, EditScheduleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.editFriendsOption:
                 intent = new Intent(this, EditFriendsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settingsOption:
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.signOutOption:
@@ -292,9 +339,16 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString("username", "");
                 editor.putString("password", "");
-                editor.commit();
+
+                ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+                editor.putInt("notificationNumber", 0);
+                editor.apply();
+
+                stopService(new Intent(this, NotificationService.class));
+                stopService(new Intent(this, NotificationReceivedService.class));
 
                 startActivity(intent);
+
                 break;
         }
         return true;
@@ -308,47 +362,21 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
         return t;
     }
 
-    private int Minus5mins(int t){
+    private int MinusXMinutes(int t, String m){
+        if (m.equals("")){
+            m = "5";
+        }
         int min = t%100;
         int hr = t/100;
-        if(min >= 5){
-            min = min - 5;
+        if(min >= Integer.parseInt(m)){
+            min = min - Integer.parseInt(m);
         }
         else{
-            min = 60 + min - 5;
+            min = 60 + min - Integer.parseInt(m);
             hr = hr - 1;
         }
 
         return (hr*100 + min);
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) throws SecurityException {
-        Lastlocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        double lat = 0;
-        double lon = 0;
-        if(Lastlocation != null){
-            lat = Lastlocation.getLatitude();
-            lon = Lastlocation.getLongitude();
-            String lata = Double.toString(lat);
-            String longi = Double.toString(lon);
-        }
-
-        mDatabase = FirebaseDatabase.getInstance().getReference("users/" + getSharedPreferences(PREFS_NAME, 0).getString("username",""));
-
-        newUser = new Users(lat + "", lon + "", getSharedPreferences(PREFS_NAME, 0).getString("password",""), "yes");
-
-        mDatabase.setValue(newUser);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 }
 

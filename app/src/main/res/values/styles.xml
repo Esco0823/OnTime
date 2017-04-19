@@ -5,4 +5,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="garnetAndGoldSpinner" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/colorGold</item>
+        <item name="android:background">@color/colorGarnet</item>
+        <item name="android:spinnerItemStyle">@style/garnetAndGoldSpinner</item>
+    </style>
+
 </resources>

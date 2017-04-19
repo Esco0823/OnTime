@@ -1,9 +1,5 @@
 package edu.fsu.cs.mobile.ontime;
 
-/**
- * Created by Francisco on 4/3/2017.
- */
-
 public class Friend {
     private String friendKey;
     private String friendName;
